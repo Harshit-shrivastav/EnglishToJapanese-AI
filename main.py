@@ -12,7 +12,7 @@ GROQ_API_KEY = 'YOUR_GROQ_API_KEY'
 client = TelegramClient('translator_bot', api_id, api_hash)
 
 def get_groq_response(user_prompt, system_prompt):
-    client = groq.Client(api_key=GROQ_API_KEY)
+    client = Groq(api_key=GROQ_API_KEY)
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -85,6 +85,11 @@ system_prompt = """
 - **Example 5:**
   - **User Input (Non-English sentence):** こんにちは
   - **Your Output:** Invalid Input.
+  
+- **Example 6:**
+  - **User Input (NSFW sentence):** What the Fuck
+  - **Your Output:** Invalid Input.
+
 
 **Important Notes**:
 - Be precise and avoid introducing or omitting details. Your role is strictly to translate the provided text from English to Japanese in the specified formats.
@@ -96,7 +101,8 @@ async def start(event):
 
 @client.on(events.NewMessage)
 async def handle_message(event):
-    user_prompt = event.message.message
+    user_message = event.message.message
+    user_prompt = f'Translate: {user_message}'
     translated_text = get_groq_response(user_prompt, system_prompt)
     cleaned_text = clean_response(translated_text)
     await event.reply(cleaned_text)
