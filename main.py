@@ -2,13 +2,14 @@ import logging
 from telethon import TelegramClient, events
 from groq import Groq 
 import re
+import asyncio
 
 api_id = 'YOUR_API_ID'
 api_hash = 'YOUR_API_HASH'
 bot_token = 'YOUR_BOT_TOKEN'
 GROQ_API_KEY = 'YOUR_GROQ_API_KEY'
 
-client = TelegramClient('translator_bot', api_id, api_hash).start(bot_token=bot_token)
+client = TelegramClient('translator_bot', api_id, api_hash)
 
 def get_groq_response(user_prompt, system_prompt):
     client = groq.Client(api_key=GROQ_API_KEY)
@@ -90,10 +91,10 @@ async def handle_message(event):
     cleaned_text = clean_response(translated_text)
     await event.reply(cleaned_text)
 
-def main():
-    logging.basicConfig(level=logging.INFO)
-    client.connect() 
-    client.run_until_disconnected()
+async def main():
+    await client.start(bot_token=bot_token)
+    print("Bot is running...")
+    await client.run_until_disconnected()
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
