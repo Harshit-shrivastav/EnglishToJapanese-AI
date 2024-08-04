@@ -95,10 +95,6 @@ system_prompt = """
 - Be precise and avoid introducing or omitting details. Your role is strictly to translate the provided text from English to Japanese in the specified formats.
 """
 
-@client.on(events.NewMessage(pattern='/start'))
-async def start(event):
-    await event.reply('Welcome! Send me an English paragraph, and I will translate it to Japanese.')
-
 @client.on(events.NewMessage)
 async def handle_message(event):
     user_message = event.message.message
