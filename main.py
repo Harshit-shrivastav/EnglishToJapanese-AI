@@ -97,6 +97,8 @@ system_prompt = """
 
 @client.on(events.NewMessage)
 async def handle_message(event):
+    if event.message.message.startswith('/'):
+        return
     user_message = event.message.message
     user_prompt = f'Translate: {user_message}'
     translated_text = get_groq_response(user_prompt, system_prompt)
