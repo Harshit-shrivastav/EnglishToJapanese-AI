@@ -106,7 +106,7 @@ async def handle_message(event):
         await event.reply("Hello, I am an English to Japanese translator. Send me an English context, and I will translate it to Japanese.") 
         return 
     user_message = event.message.message
-    user_prompt = '{user_message}'
+    user_prompt = 'Translate: {user_message}'
     translated_text = get_groq_response(user_prompt, system_prompt)
     cleaned_text = clean_response(translated_text)
     await event.reply(cleaned_text)
