@@ -1,7 +1,7 @@
 import logging
 from telethon import TelegramClient, events
 from groq import Groq 
-import re
+import re, os
 import asyncio
 
 API_ID = os.environ.get('API_ID')
