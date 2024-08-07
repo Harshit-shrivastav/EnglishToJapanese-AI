@@ -4,12 +4,12 @@ from groq import Groq
 import re
 import asyncio
 
-api_id = 'YOUR_API_ID'
-api_hash = 'YOUR_API_HASH'
-bot_token = 'YOUR_BOT_TOKEN'
-GROQ_API_KEY = 'YOUR_GROQ_API_KEY'
+API_ID = os.environ.get('API_ID')
+API_HASH = os.environ.get('API_HASH')
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+GROQ_API_KEY = os.environ.get('API_KEY')
 
-client = TelegramClient('translator_bot', api_id, api_hash)
+client = TelegramClient('translator_bot', API_ID, API_HASH)
 
 def get_groq_response(user_prompt, system_prompt):
     client = Groq(api_key=GROQ_API_KEY)
@@ -98,15 +98,16 @@ system_prompt = """
 @client.on(events.NewMessage)
 async def handle_message(event):
     if event.message.message.startswith('/'):
-        return
+        await event.reply("Hello, I am an English to Japanese translator. Send me an English context, and I will translate it to Japanese.") 
+        return 
     user_message = event.message.message
-    user_prompt = f'Translate: {user_message}'
+    user_prompt = '- User Input: {user_message}, - Output:'
     translated_text = get_groq_response(user_prompt, system_prompt)
     cleaned_text = clean_response(translated_text)
     await event.reply(cleaned_text)
 
 async def main():
-    await client.start(bot_token=bot_token)
+    await client.start(bot_token=BOT_TOKEN)
     print("Bot is running...")
     await client.run_until_disconnected()
 
