@@ -102,7 +102,7 @@ async def handle_message(event):
         return 
     user_message = event.message.message
     user_prompt = 'Translate: {user_message}'
-    translated_text = get_groq_response(user_prompt, system_prompt)
+    translated_text = get_groq_response(user_message, system_prompt)
     cleaned_text = clean_response(translated_text)
     await event.reply(cleaned_text)
 
