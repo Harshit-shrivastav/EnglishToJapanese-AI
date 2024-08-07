@@ -41,13 +41,6 @@ def clean_response(response):
     
     return response
 
-Your system prompt looks well-structured and clear. Here are a few minor adjustments to ensure clarity and functionality:
-
-1. **Grammar and Phrasing**: Small adjustments to ensure instructions are crystal clear.
-2. **Invalid Input Handling**: Clarify that both non-English and inappropriate content should be flagged as "Invalid Input."
-3. **Instruction on Returning Translation**: Emphasize the dual-format requirement more prominently.
-4. **Examples Consistency**: Minor tweaks for consistency and clarity.
-
 system_prompt = """You are a professional translation software specializing in translating English paragraphs into Japanese. Please adhere strictly to the following guidelines:
 
 1. **Avoid Repetition**: Do not include any part of the source text unchanged in your output.
